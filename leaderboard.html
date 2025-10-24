@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Quest Academy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏆</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=version) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-container">
+        <header class="academy-header">
+            <h1 class="academy-title">Hall of Champions</h1>
+            <p class="academy-subtitle">Top 10 Players in the Progressive Challenge</p>
+        </header>
+
+        <div class="quest-card" style="max-width: 700px;">
+            <ol class="leaderboard-list">
+                {% for player in leaderboard_data %}
+                <li class="leaderboard-item">
+                    <span class="rank-badge rank-{{ loop.index }}">{{ loop.index }}</span>
+                    <span class="player-name">{{ player.username }}</span>
+                    <span class="player-level">Level {{ player.highest_level }}</span>
+                </li>
+                {% else %}
+                <p style="text-align: center; color: var(--text-light);">The leaderboard is empty. Be the first to set a record!</p>
+                {% endfor %}
+            </ol>
+        </div>
+
+        <div class="quest-controls" style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('index') }}" class="quest-btn primary">
+                <span>Return to Academy</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

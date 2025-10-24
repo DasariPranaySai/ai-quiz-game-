@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quest Academy - Reading Champions</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=version) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="game-arena">
+    <div class="arena-container">
+        <!-- Progress Bar -->
+        <div class="quest-progress">
+            <a href="/" class="home-btn quest-btn secondary">
+                <span>Home</span>
+            </a>
+            <div id="gameInfo" 
+                 class="level-indicator"
+                 data-genre="{{ game.genre }}"
+                 data-level="{{ game.level if game.level is defined else '' }}"
+                 data-max-level="{{ game.max_level if game.max_level is defined else '' }}"
+                 data-hints="{{ game.hints if game.hints is defined else 3 }}">
+                <span id="levelBadge" class="level-badge hidden">Level <span id="currentLevel">1</span> / <span id="maxLevel">?</span></span>
+                <span id="genreBadge" class="genre-badge hidden"></span>
+            </div>
+            <div class="score-display">
+                <span class="score-text" id="scoreBar">Score: 0 / 0</span>
+                <div class="reading-timer" id="readingTimer">
+                    <div class="timer-progress" id="timerProgressBar"></div>
+                    <span id="timerText">00:00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Story Scroll -->
+        <section id="storySection" class="story-scroll">
+            <div class="scroll-header">
+                <h2>Your Epic Tale</h2>
+                <div class="scroll-decoration"></div>
+            </div>
+            <div class="scroll-content" style="position: relative;">
+                <p id="storyText" class="story-text">Loading your adventure...</p>
+            </div>
+            <div class="quest-controls" style="margin-top: 1rem;">
+                <button id="startQuizBtn" class="quest-btn primary hidden">
+                    <span>I'm Ready for the Quiz!</span>
+                </button>
+                 <button id="skipStoryBtn" class="quest-btn secondary hidden">
+                    <span>Skip Story</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Quiz Arena -->
+        <section id="quizSection" class="quiz-arena hidden">
+            <div class="arena-header">
+                <h2>Knowledge Challenge</h2>
+                <div class="question-counter">
+                    <span id="questionCounter">Question 1 of 3</span>
+                </div>
+                <button id="hintBtn" class="quest-btn hint-btn">
+                    💡 <span id="hintCount">3</span>
+                </button>
+            </div>
+            
+            <!-- Question Progress Bar -->
+            <div class="quiz-progress-container">
+                <div id="quizProgressBar" class="quiz-progress-bar"></div>
+            </div>
+
+            <div class="question-card">
+                <div class="question-text" id="questionText"></div>
+                <div class="answer-options" id="answerOptions"></div>
+            </div>
+
+            <div class="quest-controls">
+                <button id="nextBtn" class="quest-btn secondary hidden">
+                    <span>Next Challenge</span>
+                </button>
+                <button id="newQuestBtn" class="quest-btn primary hidden">
+                    <span>New Adventure</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Results Modal -->
+        <div id="resultsModal" class="results-modal hidden">
+            <div class="modal-content">
+                <div class="confetti-container" id="confettiContainer"></div>
+                <div class="results-header">
+                    <h3 id="resultsTitle">Quest Complete!</h3>
+                </div>
+                <div class="results-body">
+                    <div class="achievement-badge" id="achievementBadge"></div>
+                    <p id="resultsText"></p>
+                </div>
+                <button id="continueBtn" class="quest-btn primary">Continue Adventure</button>
+                <button id="tryAgainBtn" class="quest-btn secondary hidden">Try Again</button>
+                <button id="skipLevelBtn" class="quest-btn tertiary hidden">
+                    <span>Skip Level (Cost: 2 Hints)</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="message" class="arena-message"></div>
+    </div>
+
+    <!-- Orientation Blocker -->
+    <div class="orientation-blocker">
+        <div class="orientation-message">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="80" height="80">
+                <path d="M18.75 3.75h-3.75a.75.75 0 0 0 0 1.5h1.444l-3.002 3.002a.75.75 0 0 0 1.06 1.06l3.003-3.002v1.444a.75.75 0 0 0 1.5 0V4.5a.75.75 0 0 0-.75-.75zM5.25 20.25h3.75a.75.75 0 0 0 0-1.5H7.556l3.002-3.002a.75.75 0 1 0-1.06-1.06l-3.003 3.002v-1.444a.75.75 0 0 0-1.5 0v3.75c0 .414.336.75.75.75zM9 3.75A.75.75 0 0 0 9 5.25v13.5a.75.75 0 0 0 1.5 0V5.25A.75.75 0 0 0 9 3.75zm6 0a.75.75 0 0 0-.75.75v13.5a.75.75 0 0 0 1.5 0V5.25a.75.75 0 0 0-.75-.75z"/>
+            </svg>
+            <p>Please rotate your device to landscape mode to play.</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js', v=version) }}"></script>
+</body>
+</html>

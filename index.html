@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Quest Academy - Reading Champions</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏰</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=version) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Fredoka+One:wght@400&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-container">
+        
+        <header class="academy-header">
+            <div class="logo-container">
+                <h1 class="academy-title">Quest Academy</h1>
+                <p class="academy-subtitle">Master the Art of Reading & Comprehension</p>
+            </div>
+        </header>
+
+        <main>
+            {% if not session.loggedin %}
+                <div class="auth-card quest-card">
+                    <!-- Simplified Login/Register Form -->
+                    <form id="login-form" action="{{ url_for('login') }}" method="post" class="auth-form">
+                        <h2 class="quest-heading">Enter Your Name</h2>
+                        <div class="form-group">
+                            <label for="login-username" class="form-label">Username</label>
+                            <input type="text" id="login-username" name="username" class="quest-select" required>
+                        </div>
+                        <!-- Password field is hidden but submitted to satisfy the backend check -->
+                        <input type="hidden" name="password" value="default">
+                        <button type="submit" class="start-quest-btn">Play Now</button>
+                    </form>
+
+                    <div id="auth-message" class="quest-message {% if msg %}error{% endif %}">{{ msg }}</div>
+                </div>
+            {% else %}
+            <!-- This section is for logged-in users -->
+            <div class="quest-card" id="game-setup-card">
+                 <h2 class="quest-heading">Choose Your Adventure</h2>
+                 <div style="text-align:center; margin-bottom: 1rem; color: var(--text-dark);">
+                    Welcome, <strong>{{ session.username }}</strong>!
+                    <a href="{{ url_for('profile') }}" style="color: var(--secondary-magic); text-decoration: none; margin: 0 0.5rem;">(Profile)</a>
+                    <a href="{{ url_for('logout') }}" style="color: var(--primary-magic); text-decoration: none;">(Logout)</a>
+                 </div>
+                 <form id="startForm" class="quest-form">
+                     <div class="form-group">
+                         <label for="genre" class="form-label">Story Realm:</label>
+                         <div class="select-wrapper">
+                             <select id="genre" name="genre" class="quest-select">
+                                 <option value="adventure" selected>Epic Adventures</option>
+                                 <option value="fantasy">Magical Fantasy</option>
+                                 <option value="mystery">Mystery & Secrets</option>
+                                 <option value="science fiction">Sci-Fi Worlds</option>
+                                 <option value="historical">Time Travel Tales</option>
+                             </select>
+                         </div>
+                     </div>
+ 
+                     <div class="form-group">
+                         <label for="gameMode" class="form-label">Quest Mode:</label>
+                         <div class="select-wrapper">
+                             <select id="gameMode" name="gameMode" class="quest-select">
+                                 <option value="classic" selected>Classic Quest</option>
+                                 <option value="levels">Progressive Challenge</option>
+                             </select>
+                        </div>
+                     </div>
+ 
+                     <button type="submit" class="start-quest-btn" id="startButton">
+                         <span class="btn-text">Begin Quest</span>
+                         <div class="btn-glow"></div>
+                     </button>
+                 </form>
+ 
+                 <div id="message" class="quest-message"></div>
+                 <p class="card-footer-text">Powered by AI Magic & Your Imagination</p>
+            </div>
+            {% endif %}
+        </main>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/index.js', v=version) }}"></script>
+</body>
+</html>

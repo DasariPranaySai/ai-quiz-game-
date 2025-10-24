@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile - Quest Academy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👤</text></svg>">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=version) }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="magical-container">
+        <header class="academy-header">
+            <h1 class="academy-title">Adventurer's Log</h1>
+            <p class="academy-subtitle">Your personal journey at Quest Academy</p>
+        </header>
+
+        <div class="quest-card" style="max-width: 700px;">
+            <h2 class="quest-heading" style="margin-bottom: 2rem;">{{ stats.username }}'s Stats</h2>
+            <ul class="profile-stats-list">
+                <li class="profile-stat-item">
+                    <span class="stat-label">Highest Level Reached</span>
+                    <span class="stat-value">{{ stats.highest_level }}</span>
+                </li>
+                <li class="profile-stat-item">
+                    <span class="stat-label">Total Questions Answered</span>
+                    <span class="stat-value">{{ stats.total_questions_answered }}</span>
+                </li>
+                <li class="profile-stat-item">
+                    <span class="stat-label">Total Correct Answers</span>
+                    <span class="stat-value">{{ stats.total_correct_answers }}</span>
+                </li>
+                <li class="profile-stat-item">
+                    <span class="stat-label">Overall Accuracy</span>
+                    <span class="stat-value">{{ stats.accuracy }}%</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Recent Game History -->
+        <div class="quest-card" style="max-width: 700px; margin-top: 2rem;">
+            <h2 class="quest-heading" style="margin-bottom: 2rem;">Recent Quests</h2>
+            {% if game_history %}
+            <ul class="game-history-list">
+                {% for game in game_history %}
+                <li class="game-history-item">
+                    <div class="history-details">
+                        <span class="history-genre">{{ game.genre | title }}</span>
+                        <span class="history-mode">{{ game.mode_text }} {% if game.level %}(Lvl {{ game.level }}){% endif %}</span>
+                    </div>
+                    <div class="history-score">
+                        <span class="score-value">{{ game.score_text }}</span>
+                        <span class="history-date">{{ game.played_date }}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p style="text-align: center; color: var(--text-light);">No quests completed yet. Go play a game!</p>
+            {% endif %}
+        </div>
+
+        <div class="quest-controls" style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('index') }}" class="quest-btn primary">
+                <span>Return to Academy</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
